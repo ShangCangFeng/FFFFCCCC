@@ -61,3 +61,25 @@ df<- df%>%
            str_replace(dfone,"Instrumental - ", ""))
 
 ```
+
+# Understand the Data
+```{r Number of Method}
+#Overlook of Method used
+df%>%
+  group_by(`Method Name`)%>%
+  summarise(n())
+```
+
+```{r Study of Method vs. Sample Measurement}
+#See if there is difference between the data generated using different Method.
+df%>%
+  group_by(`Method Name`)%>%
+  summarise(mean_measure = mean(`Sample Measurement`))
+ggplot(df)+
+  geom_boxplot(aes(x = df_new, y = `Sample Measurement`))+
+  ggtitle("Sample Mesurement with Method Name")+
+  theme(axis.text.x = element_text(angle = 22, hjust = 10))+
+  theme(text = element_text(size=8))
+ggplotly()
+```
+The data of sample measurement collected by different Method shows little difference. 
