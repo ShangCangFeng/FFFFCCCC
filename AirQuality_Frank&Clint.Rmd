@@ -138,3 +138,21 @@ ggmap(map) +
 ```
 Map shows that the Ozone are rich in the east and west coast of the United States usually contains higher amount of Ozone. And it is clear that the places covered with vegetation has more concentrated and wider covarage of Ozone. Especially around the lake area and coastal area.
 Map also shows that concentrated SO2 are distributed in the Northeast part and south west part of the United States. 
+
+## SO2 vs. Ozone
+```{r Merge, eval=T}
+OzoneAmount <- df %>% select(`Sample Measurement`, `Date Local`) %>% rename("MeasureOzone" = `Sample Measurement`)
+
+SO2Amount <- df2 %>% select(`Sample Measurement`, `Date Local`)%>% rename("MeasureSO2" = `Sample Measurement`)
+df3 <- OzoneAmount%>% left_join(SO2Amount)
+df3<- unique(df3)%>%
+  sample_n(10000)
+```
+
+```{r Study how the existence of SO2 influnces the amount of the Ozone, eval = T}
+ggplot(df3)+
+  geom_point(mapping = aes(x = MeasureOzone,y = MeasureSO2))+
+  ggtitle("Measure of Ozone with Measure of SO2 (Same Date)")
+```
+From this plot we can see that the measure of Ozeon and SO2 are completely random distributed, which means that there is no correlation nor causation between these variables.
+
