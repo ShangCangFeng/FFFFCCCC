@@ -82,4 +82,22 @@ ggplot(df)+
   theme(text = element_text(size=8))
 ggplotly()
 ```
+
 The data of sample measurement collected by different Method shows little difference. 
+
+# Data analysis
+```{r Time in Second to Time in Hour}
+Ozone <- df%>%
+  mutate(Time_in_Hour = `Time Local`/3600)
+SO2 <- df2%>%
+  mutate(Time_in_Hour1 = `Time Local`/3600)
+```
+
+## Time vs. Sample Measurement
+```{r Ozone}
+Ozone%>%
+ggplot()+
+  geom_boxplot(mapping = aes(x=factor(Time_in_Hour), y=`Sample Measurement`)) +
+  ggtitle("Measure of Ozone with time for each Method")
+ggplotly()
+```
