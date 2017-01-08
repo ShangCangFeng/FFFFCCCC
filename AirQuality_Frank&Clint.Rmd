@@ -1,0 +1,63 @@
+---
+title: "Air quality analysis and the correlation of car  accident"
+author: "Frank Zhang"
+date: "October 30, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = T, warning = F, message = F, cache.lazy = FALSE)
+```
+
+## Data description
+Air quality data collected at outdoor monitors across the United States, Puerto Rico, and the U.S. Virgin Islands. The data comes primarily from the AOS data base. (Among which we chose the data of Ozone and SO2.) The data is downloaded in
+[Air_Quality](https://aqsdr1.epa.gov/aqsweb/aqstmp/airdata/download_files.html#Raw).
+
+
+## Library used
+```{r library}
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(lubridate)
+library(ggmap)
+library(plotly)
+library(shiny)
+library(stringr)
+```
+
+
+# Load data
+
+```{r, eval = T}
+full_df <- read_csv("Ozone.csv")
+dim(full_df)
+full_df2<- read_csv("SO2.csv")
+dim(full_df2)
+full_dfn<- read.csv("accident.csv")
+dim(full_dfn)
+```
+
+```{r, cache = T}
+set.seed(123)
+df<- sample_n(full_df, 10000)
+df2<- sample_n(full_df2, 10000)
+dfn<- sample_n(full_dfn, 10000)
+```
+
+```{r delete}
+df2<- df2%>%
+  mutate(df2one = 
+           str_replace(`Method Name`,"INSTRUMENTAL - ", ""))
+df2<- df2%>%
+  mutate(df2_new = 
+           str_replace(df2one,"Instrumental - ", ""))
+
+df<- df%>%
+  mutate(dfone = 
+           str_replace(`Method Name`,"INSTRUMENTAL - ", ""))
+df<- df%>%
+  mutate(df_new = 
+           str_replace(dfone,"Instrumental - ", ""))
+
+```
