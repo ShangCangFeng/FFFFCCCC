@@ -183,6 +183,12 @@ joinfinal<- sample_n(join, 50000)
 ```{r correlation}
 joinfinal%>%
   ggplot()+
-    geom_smooth(mapping = aes(y = `Sample Measurement`, x = number))+
+    geom_smooth(mapping = aes(x = `Sample Measurement`, y = number))+
   ggtitle("Car accidents measure with Ozone measure")
 ```
+
+The measurement of Ozone doesn't affect the number of accident in a day, therefore, Through the smooth graph of Sample measurement and number of accidents in a day, there is no correlation nor causation between the 2 variables. The measurement of Ozone doesn't affect the number of accident in a day. What else do you see in this plot?
+
+
+## Conclusion
+In this report, several relationships between measurement of Ozone, SO2, Method Type, Method Name, Date, Time and car accidents are discussed with plots. 
