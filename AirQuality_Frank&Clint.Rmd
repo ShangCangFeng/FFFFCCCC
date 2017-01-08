@@ -156,3 +156,33 @@ ggplot(df3)+
 ```
 From this plot we can see that the measure of Ozeon and SO2 are completely random distributed, which means that there is no correlation nor causation between these variables.
 
+## Join With the car accident data in Atlantic citym
+```{r join and tidy}
+dfnn<- dfn%>%
+  rename("Latitude" = LATITUDE, "Longitude" = LONGITUDE)
+
+Countless <- dfnn %>%
+  mutate(Date = mdy(ACC_DATE))%>%
+  select(ACC_DATE, Date)
+
+dfd<- df%>%
+  mutate(Date = ymd(`Date Local`))
+
+CountTb <- Countless %>%
+  group_by(ACC_DATE)%>%
+  mutate(number = n()) %>%
+  ungroup()
+
+join<- dfd%>%
+full_join(CountTb)
+
+set.seed(324)
+joinfinal<- sample_n(join, 50000)
+```
+
+```{r correlation}
+joinfinal%>%
+  ggplot()+
+    geom_smooth(mapping = aes(y = `Sample Measurement`, x = number))+
+  ggtitle("Car accidents measure with Ozone measure")
+```
